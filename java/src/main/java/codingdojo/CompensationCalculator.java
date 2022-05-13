@@ -15,8 +15,8 @@ public class CompensationCalculator {
         var noOvertime = new NoOvertime();
 
 
-        if (NoOvertime.isaBoolean(hoursOvertimeTotal, assignment, briefing)) {
-            return new Overtime(BigDecimal.ZERO, BigDecimal.ZERO);
+        if (noOvertime.isValidFor(hoursOvertimeTotal, assignment, briefing)) {
+           return noOvertime.calculateOvertime(hoursOvertimeTotal, assignment, briefing);
         } else if (!isApplesauce(assignment, briefing) && hoursOvertimeTotal.compareTo(MAX_OVERTIME_HOURS_RATE_1) < 1) {
             return new Overtime(hoursOvertimeTotal, BigDecimal.ZERO);
         } else if (!isApplesauce(assignment, briefing) && assignment.isUnionized()) {
