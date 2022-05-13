@@ -10,14 +10,7 @@ public class CompensationCalculator {
 
     public static Overtime calculateOvertime(BigDecimal hoursOvertimeTotal, Assignment assignment, Briefing briefing) {
 
-        boolean isWatcodeUnion = briefing.watcode() && assignment.isUnionized();
-        boolean isWatcodeNonUnionForeign = briefing.watcode() && !assignment.isUnionized() && briefing.foreign();
-
-        var isApplesauce = (!briefing.watcode() && !briefing.z3() && !assignment.isUnionized())
-                || (briefing.hbmo() && assignment.isUnionized())
-                || isWatcodeNonUnionForeign
-                || isWatcodeUnion
-                || (briefing.foreign() && !assignment.isUnionized());
+        boolean isApplesauce = isApplesauce(assignment, briefing);
         if (isApplesauce) {
             return new Overtime(hoursOvertimeTotal, BigDecimal.ZERO);
         } else if (hoursOvertimeTotal.compareTo(BigDecimal.ZERO) < 1) {
@@ -33,6 +26,18 @@ public class CompensationCalculator {
             var hoursOvertimeRate2 = hoursOvertimeTotal.subtract(MAX_OVERTIME_HOURS_RATE_1);
             return new Overtime(MAX_OVERTIME_HOURS_RATE_1, hoursOvertimeRate2);
         }
+    }
+
+    private static boolean isApplesauce(Assignment assignment, Briefing briefing) {
+        boolean isWatcodeUnion = briefing.watcode() && assignment.isUnionized();
+        boolean isWatcodeNonUnionForeign = briefing.watcode() && !assignment.isUnionized() && briefing.foreign();
+
+        var isApplesauce = (!briefing.watcode() && !briefing.z3() && !assignment.isUnionized())
+                || (briefing.hbmo() && assignment.isUnionized())
+                || isWatcodeNonUnionForeign
+                || isWatcodeUnion
+                || (briefing.foreign() && !assignment.isUnionized());
+        return isApplesauce;
     }
 
 
