@@ -46,12 +46,4 @@ public class CompensationCalculator {
     }
 
 
-    public static BigDecimal calculateThreshold(Assignment assignment, long threshold) {
-        Duration remainder = assignment.duration().minusHours(threshold);
-        if (remainder.isNegative()) {
-            return BigDecimal.valueOf(assignment.duration().toSeconds() / 3600);
-        }
-        return BigDecimal.valueOf(threshold);
-    }
-
 }
