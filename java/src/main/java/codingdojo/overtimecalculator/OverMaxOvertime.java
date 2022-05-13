@@ -12,17 +12,21 @@ public class OverMaxOvertime implements OvertimeCalculator {
 
     @Override
     public boolean isValidFor(BigDecimal hoursOvertimeTotal, Assignment assignment, Briefing briefing) {
-        boolean isWatcodeUnion = briefing.watcode() && assignment.isUnionized();
-        boolean isWatcodeNonUnionForeign = briefing.watcode() && !assignment.isUnionized() && briefing.foreign();
 
-        var isApplesauce = (!briefing.watcode() && !briefing.z3() && !assignment.isUnionized())
-                || (briefing.hbmo() && assignment.isUnionized())
-                || isWatcodeNonUnionForeign
-                || isWatcodeUnion
-                || (briefing.foreign() && !assignment.isUnionized());
+        var isApplesauce = (briefing.watcode()
+                || briefing.z3()
+                || assignment.isUnionized())
+                && (!briefing.hbmo() || !assignment.isUnionized())
+                && !(briefing.watcode()
+                && !assignment.isUnionized()
+                && briefing.foreign())
+                && !(briefing.watcode()
+                && assignment.isUnionized())
+                && !(briefing.foreign()
+                && !assignment.isUnionized());
 
         var exceedsMaxOvertime = 1 <= hoursOvertimeTotal.compareTo(MAX_OVERTIME_HOURS_RATE_1);
-        return !isApplesauce && exceedsMaxOvertime;
+        return exceedsMaxOvertime && isApplesauce ;
     }
 
     @Override
