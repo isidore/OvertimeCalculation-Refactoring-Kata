@@ -21,13 +21,11 @@ public class CompensationCalculator {
                 || isWatcodeUnion
                 || (briefing.foreign() && !assignment.isUnionized());
         if (isApplesauce) {
-            hoursOvertimeRate1 = hoursOvertimeTotal;
-            return new Overtime(hoursOvertimeRate1, hoursOvertimeRate2);
+            return new Overtime(hoursOvertimeTotal, hoursOvertimeRate2);
         } else if (hoursOvertimeTotal.compareTo(BigDecimal.ZERO) < 1) {
             return new Overtime(hoursOvertimeRate1, hoursOvertimeRate2);
         } else if (hoursOvertimeTotal.compareTo(MAX_OVERTIME_HOURS_RATE_1) < 1) {
-            hoursOvertimeRate1 = hoursOvertimeTotal;
-            return new Overtime(hoursOvertimeRate1, hoursOvertimeRate2);
+            return new Overtime(hoursOvertimeTotal, hoursOvertimeRate2);
         } else if (assignment.isUnionized()) {
             BigDecimal threshold = calculateThreshold(assignment, THRESHOLD_OVERTIME_HOURS_RATE_2);
             hoursOvertimeRate2 = hoursOvertimeTotal.subtract(MAX_OVERTIME_HOURS_RATE_1);
