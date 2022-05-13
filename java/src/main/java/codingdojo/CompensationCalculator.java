@@ -14,16 +14,14 @@ public class CompensationCalculator {
     public static Overtime calculateOvertime(BigDecimal hoursOvertimeTotal, Assignment assignment, Briefing briefing) {
 
 
-        var overtimes = new OvertimeCalculator[]{new NoOvertime()};
+        var overtimes = new OvertimeCalculator[]{new NoOvertime(),new UnderMaxOvertime() };
         for (OvertimeCalculator overtime : overtimes) {
             if (overtime.isValidFor(hoursOvertimeTotal,assignment, briefing)){
                 return overtime.calculateOvertime(hoursOvertimeTotal, assignment, briefing);
             }
         }
 
-        if (!isApplesauce(assignment, briefing) && hoursOvertimeTotal.compareTo(MAX_OVERTIME_HOURS_RATE_1) < 1) {
-            return new Overtime(hoursOvertimeTotal, BigDecimal.ZERO);
-        } else if (!isApplesauce(assignment, briefing) && assignment.isUnionized()) {
+        if (!isApplesauce(assignment, briefing) && assignment.isUnionized()) {
             BigDecimal threshold = calculateThreshold(assignment, THRESHOLD_OVERTIME_HOURS_RATE_2);
             var hoursOvertimeRate2 = hoursOvertimeTotal.subtract(MAX_OVERTIME_HOURS_RATE_1);
             hoursOvertimeRate2 = hoursOvertimeRate2.min(threshold);
