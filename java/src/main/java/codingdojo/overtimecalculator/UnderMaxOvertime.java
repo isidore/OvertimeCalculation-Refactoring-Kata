@@ -1,5 +1,8 @@
-package codingdojo;
+package codingdojo.overtimecalculator;
 
+import codingdojo.Assignment;
+import codingdojo.Briefing;
+import codingdojo.Overtime;
 import codingdojo.overtimecalculator.OvertimeCalculator;
 
 import java.math.BigDecimal;

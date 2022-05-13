@@ -20,7 +20,9 @@ public class UnionizedAssignmentOvertime implements OvertimeCalculator {
 
     @Override
     public boolean isValidFor(BigDecimal hoursOvertimeTotal, Assignment assignment, Briefing briefing) {
-        return !isApplesauce(assignment, briefing) && assignment.isUnionized();
+        var isNonExempt = !briefing.hbmo() && !briefing.watcode();
+        var exceedsMaxOvertime = 1 <= hoursOvertimeTotal.compareTo(MAX_OVERTIME_HOURS_RATE_1);
+        return assignment.isUnionized() && isNonExempt && exceedsMaxOvertime;
     }
 
     @Override

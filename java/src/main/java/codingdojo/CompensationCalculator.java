@@ -1,9 +1,6 @@
 package codingdojo;
 
-import codingdojo.overtimecalculator.OverMaxOvertime;
-import codingdojo.overtimecalculator.UnionizedAssignmentOvertime;
-import codingdojo.overtimecalculator.NoOvertime;
-import codingdojo.overtimecalculator.OvertimeCalculator;
+import codingdojo.overtimecalculator.*;
 
 import java.math.BigDecimal;
 
