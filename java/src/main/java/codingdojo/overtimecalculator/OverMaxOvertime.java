@@ -7,13 +7,22 @@ import codingdojo.Overtime;
 import java.math.BigDecimal;
 
 import static codingdojo.CompensationCalculator.MAX_OVERTIME_HOURS_RATE_1;
-import static codingdojo.CompensationCalculator.isApplesauce;
 
 public class OverMaxOvertime implements OvertimeCalculator {
 
     @Override
     public boolean isValidFor(BigDecimal hoursOvertimeTotal, Assignment assignment, Briefing briefing) {
-        return !isApplesauce(assignment, briefing);
+        boolean isWatcodeUnion = briefing.watcode() && assignment.isUnionized();
+        boolean isWatcodeNonUnionForeign = briefing.watcode() && !assignment.isUnionized() && briefing.foreign();
+
+        var isApplesauce = (!briefing.watcode() && !briefing.z3() && !assignment.isUnionized())
+                || (briefing.hbmo() && assignment.isUnionized())
+                || isWatcodeNonUnionForeign
+                || isWatcodeUnion
+                || (briefing.foreign() && !assignment.isUnionized());
+
+        var exceedsMaxOvertime = 1 <= hoursOvertimeTotal.compareTo(MAX_OVERTIME_HOURS_RATE_1);
+        return !isApplesauce && exceedsMaxOvertime;
     }
 
     @Override
