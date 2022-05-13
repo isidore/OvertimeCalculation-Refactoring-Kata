@@ -10,21 +10,21 @@ public class CompensationCalculator {
 
     public static Overtime calculateOvertime(BigDecimal hoursOvertimeTotal, Assignment assignment, Briefing briefing) {
 
-        boolean isApplesauce = isApplesauce(assignment, briefing);
-        if (isApplesauce) {
-            return new Overtime(hoursOvertimeTotal, BigDecimal.ZERO);
-        } else if (hoursOvertimeTotal.compareTo(BigDecimal.ZERO) < 1) {
+        boolean isSimpleOvertime = isApplesauce(assignment, briefing);
+        if (!isSimpleOvertime && hoursOvertimeTotal.compareTo(BigDecimal.ZERO) < 1) {
             return new Overtime(BigDecimal.ZERO, BigDecimal.ZERO);
-        } else if (hoursOvertimeTotal.compareTo(MAX_OVERTIME_HOURS_RATE_1) < 1) {
+        } else if (!isSimpleOvertime && hoursOvertimeTotal.compareTo(MAX_OVERTIME_HOURS_RATE_1) < 1) {
             return new Overtime(hoursOvertimeTotal, BigDecimal.ZERO);
-        } else if (assignment.isUnionized()) {
+        } else if (!isSimpleOvertime && assignment.isUnionized()) {
             BigDecimal threshold = calculateThreshold(assignment, THRESHOLD_OVERTIME_HOURS_RATE_2);
             var hoursOvertimeRate2 = hoursOvertimeTotal.subtract(MAX_OVERTIME_HOURS_RATE_1);
             hoursOvertimeRate2 = hoursOvertimeRate2.min(threshold);
             return new Overtime(MAX_OVERTIME_HOURS_RATE_1, hoursOvertimeRate2);
-        } else {
+        } else if (!isSimpleOvertime) {
             var hoursOvertimeRate2 = hoursOvertimeTotal.subtract(MAX_OVERTIME_HOURS_RATE_1);
             return new Overtime(MAX_OVERTIME_HOURS_RATE_1, hoursOvertimeRate2);
+        } else {
+            return new Overtime(hoursOvertimeTotal, BigDecimal.ZERO);
         }
     }
 
