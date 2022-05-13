@@ -1,5 +1,6 @@
 package codingdojo;
 
+import codingdojo.overtimecalculator.UnionizedAssignmentOvertime;
 import codingdojo.overtimecalculator.NoOvertime;
 import codingdojo.overtimecalculator.OvertimeCalculator;
 
@@ -14,19 +15,17 @@ public class CompensationCalculator {
     public static Overtime calculateOvertime(BigDecimal hoursOvertimeTotal, Assignment assignment, Briefing briefing) {
 
 
-        var overtimes = new OvertimeCalculator[]{new NoOvertime(),new UnderMaxOvertime() };
+        var overtimes = new OvertimeCalculator[]{new NoOvertime(),
+                new UnderMaxOvertime(),
+                new UnionizedAssignmentOvertime()
+                };
         for (OvertimeCalculator overtime : overtimes) {
             if (overtime.isValidFor(hoursOvertimeTotal,assignment, briefing)){
                 return overtime.calculateOvertime(hoursOvertimeTotal, assignment, briefing);
             }
         }
 
-        if (!isApplesauce(assignment, briefing) && assignment.isUnionized()) {
-            BigDecimal threshold = calculateThreshold(assignment, THRESHOLD_OVERTIME_HOURS_RATE_2);
-            var hoursOvertimeRate2 = hoursOvertimeTotal.subtract(MAX_OVERTIME_HOURS_RATE_1);
-            hoursOvertimeRate2 = hoursOvertimeRate2.min(threshold);
-            return new Overtime(MAX_OVERTIME_HOURS_RATE_1, hoursOvertimeRate2);
-        } else if (!isApplesauce(assignment, briefing)) {
+        if (!isApplesauce(assignment, briefing)) {
             var hoursOvertimeRate2 = hoursOvertimeTotal.subtract(MAX_OVERTIME_HOURS_RATE_1);
             return new Overtime(MAX_OVERTIME_HOURS_RATE_1, hoursOvertimeRate2);
         } else {
@@ -47,7 +46,7 @@ public class CompensationCalculator {
     }
 
 
-    private static BigDecimal calculateThreshold(Assignment assignment, long threshold) {
+    public static BigDecimal calculateThreshold(Assignment assignment, long threshold) {
         Duration remainder = assignment.duration().minusHours(threshold);
         if (remainder.isNegative()) {
             return BigDecimal.valueOf(assignment.duration().toSeconds() / 3600);
