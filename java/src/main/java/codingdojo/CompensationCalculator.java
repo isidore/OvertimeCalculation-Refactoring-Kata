@@ -28,16 +28,16 @@ public class CompensationCalculator {
         } else if (hoursOvertimeTotal.compareTo(MAX_OVERTIME_HOURS_RATE_1) < 1) {
             hoursOvertimeRate1 = hoursOvertimeTotal;
             return new Overtime(hoursOvertimeRate1, hoursOvertimeRate2);
+        } else if (assignment.isUnionized()) {
+            hoursOvertimeRate1 = MAX_OVERTIME_HOURS_RATE_1;
+            hoursOvertimeRate2 = hoursOvertimeTotal.subtract(MAX_OVERTIME_HOURS_RATE_1);
+            BigDecimal threshold = calculateThreshold(assignment, THRESHOLD_OVERTIME_HOURS_RATE_2);
+            hoursOvertimeRate2 = hoursOvertimeRate2.min(threshold);
+            return new Overtime(hoursOvertimeRate1, hoursOvertimeRate2);
         } else {
             hoursOvertimeRate1 = MAX_OVERTIME_HOURS_RATE_1;
             hoursOvertimeRate2 = hoursOvertimeTotal.subtract(MAX_OVERTIME_HOURS_RATE_1);
-            if (assignment.isUnionized()) {
-                BigDecimal threshold = calculateThreshold(assignment, THRESHOLD_OVERTIME_HOURS_RATE_2);
-                hoursOvertimeRate2 = hoursOvertimeRate2.min(threshold);
-                return new Overtime(hoursOvertimeRate1, hoursOvertimeRate2);
-            } else {
-                return new Overtime(hoursOvertimeRate1, hoursOvertimeRate2);
-            }
+            return new Overtime(hoursOvertimeRate1, hoursOvertimeRate2);
         }
     }
 
