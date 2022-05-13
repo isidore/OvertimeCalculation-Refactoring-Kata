@@ -9,7 +9,6 @@ public class CompensationCalculator {
     public static final int THRESHOLD_OVERTIME_HOURS_RATE_2 = 6;
 
     public static Overtime calculateOvertime(BigDecimal hoursOvertimeTotal, Assignment assignment, Briefing briefing) {
-        BigDecimal hoursOvertimeRate1 = BigDecimal.ZERO;
         BigDecimal hoursOvertimeRate2 = BigDecimal.ZERO;
 
         boolean isWatcodeUnion = briefing.watcode() && assignment.isUnionized();
@@ -23,7 +22,7 @@ public class CompensationCalculator {
         if (isApplesauce) {
             return new Overtime(hoursOvertimeTotal, hoursOvertimeRate2);
         } else if (hoursOvertimeTotal.compareTo(BigDecimal.ZERO) < 1) {
-            return new Overtime(hoursOvertimeRate1, hoursOvertimeRate2);
+            return new Overtime(BigDecimal.ZERO, hoursOvertimeRate2);
         } else if (hoursOvertimeTotal.compareTo(MAX_OVERTIME_HOURS_RATE_1) < 1) {
             return new Overtime(hoursOvertimeTotal, hoursOvertimeRate2);
         } else if (assignment.isUnionized()) {
