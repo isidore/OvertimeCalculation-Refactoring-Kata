@@ -1,11 +1,11 @@
 package codingdojo;
 
+import codingdojo.overtimecalculator.OverMaxOvertime;
 import codingdojo.overtimecalculator.UnionizedAssignmentOvertime;
 import codingdojo.overtimecalculator.NoOvertime;
 import codingdojo.overtimecalculator.OvertimeCalculator;
 
 import java.math.BigDecimal;
-import java.time.Duration;
 
 public class CompensationCalculator {
 
@@ -17,20 +17,15 @@ public class CompensationCalculator {
 
         var overtimes = new OvertimeCalculator[]{new NoOvertime(),
                 new UnderMaxOvertime(),
-                new UnionizedAssignmentOvertime()
+                new UnionizedAssignmentOvertime(),
+                new OverMaxOvertime()
                 };
         for (OvertimeCalculator overtime : overtimes) {
             if (overtime.isValidFor(hoursOvertimeTotal,assignment, briefing)){
                 return overtime.calculateOvertime(hoursOvertimeTotal, assignment, briefing);
             }
         }
-
-        if (!isApplesauce(assignment, briefing)) {
-            var hoursOvertimeRate2 = hoursOvertimeTotal.subtract(MAX_OVERTIME_HOURS_RATE_1);
-            return new Overtime(MAX_OVERTIME_HOURS_RATE_1, hoursOvertimeRate2);
-        } else {
-            return new Overtime(hoursOvertimeTotal, BigDecimal.ZERO);
-        }
+        return new Overtime(hoursOvertimeTotal, BigDecimal.ZERO);
     }
 
     public static boolean isApplesauce(Assignment assignment, Briefing briefing) {
