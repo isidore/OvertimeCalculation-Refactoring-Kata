@@ -15,7 +15,8 @@ public class CompensationCalculator {
     public static Overtime calculateOvertime(BigDecimal hoursOvertimeTotal, Assignment assignment, Briefing briefing) {
 
 
-        var overtimes = new OvertimeCalculator[]{new NoOvertime(),
+        var overtimes = new OvertimeCalculator[]{
+                new NoOvertime(),
                 new UnderMaxOvertime(),
                 new UnionizedAssignmentOvertime(),
                 new OverMaxOvertime()
