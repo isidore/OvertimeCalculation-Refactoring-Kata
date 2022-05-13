@@ -1,6 +1,7 @@
 package codingdojo;
 
 import codingdojo.overtimecalculator.NoOvertime;
+import codingdojo.overtimecalculator.OvertimeCalculator;
 
 import java.math.BigDecimal;
 import java.time.Duration;
@@ -12,12 +13,15 @@ public class CompensationCalculator {
 
     public static Overtime calculateOvertime(BigDecimal hoursOvertimeTotal, Assignment assignment, Briefing briefing) {
 
-        var noOvertime = new NoOvertime();
 
+        var overtimes = new OvertimeCalculator[]{new NoOvertime()};
+        for (OvertimeCalculator overtime : overtimes) {
+            if (overtime.isValidFor(hoursOvertimeTotal,assignment, briefing)){
+                return overtime.calculateOvertime(hoursOvertimeTotal, assignment, briefing);
+            }
+        }
 
-        if (noOvertime.isValidFor(hoursOvertimeTotal, assignment, briefing)) {
-           return noOvertime.calculateOvertime(hoursOvertimeTotal, assignment, briefing);
-        } else if (!isApplesauce(assignment, briefing) && hoursOvertimeTotal.compareTo(MAX_OVERTIME_HOURS_RATE_1) < 1) {
+        if (!isApplesauce(assignment, briefing) && hoursOvertimeTotal.compareTo(MAX_OVERTIME_HOURS_RATE_1) < 1) {
             return new Overtime(hoursOvertimeTotal, BigDecimal.ZERO);
         } else if (!isApplesauce(assignment, briefing) && assignment.isUnionized()) {
             BigDecimal threshold = calculateThreshold(assignment, THRESHOLD_OVERTIME_HOURS_RATE_2);
