@@ -1,6 +1,9 @@
 package codingdojo;
 
+import codingdojo.overtimecalculator.OverMaxOvertime;
+import com.spun.util.Tuple;
 import org.approvaltests.combinations.CombinationApprovals;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.lambda.query.Queryable;
 
@@ -12,8 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class CompensationCalculatorTest {
     @Test
     void fixme() {
-
-
         var overtimes = Queryable.as(0.0, 0.5, 1.0, 5.0, 20.0).select(BigDecimal::new).asArray();
         Boolean[] booleans = new Boolean[]{true, false};
         Duration[] durations = Queryable.as(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10).select(Duration::ofHours).asArray();
@@ -23,6 +24,38 @@ public class CompensationCalculatorTest {
 
     }
 
+    @Disabled
+    @Test
+    void testDoubleOvertime() {
+        Boolean[] booleans = new Boolean[]{true, false};
+        CombinationApprovals.verifyAllCombinations(
+                this::isValidForDoubleOvertime,
+                 booleans, booleans, booleans, booleans, booleans);
+    }
+
+    @Test
+    void testDoubleOvertime2() {
+        Boolean[] booleans = new Boolean[]{true, false};
+        CombinationApprovals.verifyAllCombinations(
+                this::isValidForDoubleOvertime2,
+                 booleans, booleans, booleans, booleans, booleans);
+    }
+
+    private Object isValidForDoubleOvertime( boolean isUnionized,  boolean watcode, boolean z3, boolean foreign, boolean hbmo) {
+        var result = OverMaxOvertime.getBooleans(
+                new Assignment(isUnionized, Duration.ZERO),
+                new Briefing(watcode, z3, foreign, hbmo)
+        );
+        return new Tuple(result, result.all(b->b));
+    }
+
+    private Object isValidForDoubleOvertime2( boolean isUnionized,  boolean watcode, boolean z3, boolean foreign, boolean hbmo) {
+        var result = OverMaxOvertime.getBooleans2(
+                new Assignment(isUnionized, Duration.ZERO),
+                new Briefing(watcode, z3, foreign, hbmo)
+        );
+        return result.all(b->b);
+    }
     private Object callOvertime(BigDecimal bigDecimal, boolean isUnionized, Duration duration, boolean watcode, boolean z3, boolean foreign, boolean hbmo) {
         return CompensationCalculator.calculateOvertime(
                 bigDecimal,
