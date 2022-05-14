@@ -1,13 +1,11 @@
 package codingdojo;
 
-import java.math.BigDecimal;
-
-public class BigDecimalUtils {
+public class ComparableUtils {
     public static <T extends Comparable<T>> boolean isALessThanOrEqualToB(T a, T b) {
         return a.compareTo(b) <= 0;
     }
 
-    public static boolean isALessThanB(BigDecimal a, BigDecimal b) {
+    public static <T extends Comparable<T>> boolean isALessThanB(T a, T b) {
         return a.compareTo(b) < 0;
     }
 }

@@ -1,13 +1,12 @@
 package codingdojo.overtimecalculator;
 
 import codingdojo.Assignment;
-import codingdojo.BigDecimalUtils;
 import codingdojo.Briefing;
 import codingdojo.Overtime;
 
 import java.math.BigDecimal;
 
-import static codingdojo.BigDecimalUtils.*;
+import static codingdojo.ComparableUtils.*;
 
 public class NoOvertime implements OvertimeCalculator {
     @Override

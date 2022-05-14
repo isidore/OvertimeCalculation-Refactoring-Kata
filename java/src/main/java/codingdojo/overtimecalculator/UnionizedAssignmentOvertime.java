@@ -7,14 +7,14 @@ import codingdojo.Overtime;
 import java.math.BigDecimal;
 import java.time.Duration;
 
-import static codingdojo.BigDecimalUtils.isALessThanB;
-import static codingdojo.BigDecimalUtils.isALessThanOrEqualToB;
+import static codingdojo.ComparableUtils.isALessThanB;
+import static codingdojo.ComparableUtils.isALessThanOrEqualToB;
 import static codingdojo.overtimecalculator.DoubleOvertime.WHEN_DOUBLE_OVERTIME_STARTS;
 
 public class UnionizedAssignmentOvertime implements OvertimeCalculator {
     public static final int MAX_DOUBLE_OVERTIME_DOMESTIC = 6;
     private static final int MAX_DOUBLE_OVERTIME_FOREIGN = 4;
-    
+
     @Override
     public boolean isValidFor(BigDecimal hoursOvertimeTotal, Assignment assignment, Briefing briefing) {
         var isNonExempt = !briefing.hbmo() && !briefing.watcode();

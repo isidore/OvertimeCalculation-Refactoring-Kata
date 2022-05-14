@@ -6,7 +6,7 @@ import codingdojo.Overtime;
 
 import java.math.BigDecimal;
 
-import static codingdojo.BigDecimalUtils.isALessThanB;
+import static codingdojo.ComparableUtils.isALessThanB;
 
 public class DoubleOvertime implements OvertimeCalculator {
 
