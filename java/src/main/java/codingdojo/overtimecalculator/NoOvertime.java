@@ -7,10 +7,12 @@ import codingdojo.Overtime;
 
 import java.math.BigDecimal;
 
+import static codingdojo.BigDecimalUtils.*;
+
 public class NoOvertime implements OvertimeCalculator {
     @Override
     public boolean isValidFor(BigDecimal hoursOvertimeTotal, Assignment assignment, Briefing briefing) {
-        return BigDecimalUtils.isALessThanOrEqualToB(hoursOvertimeTotal, BigDecimal.ZERO);
+        return isALessThanOrEqualToB(hoursOvertimeTotal, BigDecimal.ZERO);
     }
 
     @Override

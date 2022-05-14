@@ -1,11 +1,12 @@
 package codingdojo.overtimecalculator;
 
 import codingdojo.Assignment;
-import codingdojo.BigDecimalUtils;
 import codingdojo.Briefing;
 import codingdojo.Overtime;
 
 import java.math.BigDecimal;
+
+import static codingdojo.BigDecimalUtils.isALessThanB;
 
 public class DoubleOvertime implements OvertimeCalculator {
 
@@ -13,14 +14,14 @@ public class DoubleOvertime implements OvertimeCalculator {
 
     @Override
     public boolean isValidFor(BigDecimal hoursOvertimeTotal, Assignment assignment, Briefing briefing) {
-        return exceedsStandardOvertime(hoursOvertimeTotal) && isEligableForDoubleOvertime(assignment, briefing);
+        return exceedsStandardOvertime(hoursOvertimeTotal) && isEligibleForDoubleOvertime(assignment, briefing);
     }
 
     private boolean exceedsStandardOvertime(BigDecimal hoursOvertimeTotal) {
-        return BigDecimalUtils.isALessThanB(WHEN_DOUBLE_OVERTIME_STARTS, hoursOvertimeTotal);
+        return isALessThanB(WHEN_DOUBLE_OVERTIME_STARTS, hoursOvertimeTotal);
     }
 
-    private boolean isEligableForDoubleOvertime(Assignment assignment, Briefing briefing) {
+    private boolean isEligibleForDoubleOvertime(Assignment assignment, Briefing briefing) {
         var standardZ3 = briefing.z3() && !(assignment.isUnionized() || briefing.foreign());
         var standardWatcode = briefing.watcode() && !(assignment.isUnionized() || briefing.z3() || briefing.foreign());
         var standardUnionized = assignment.isUnionized() && !(briefing.watcode() || briefing.hbmo());
