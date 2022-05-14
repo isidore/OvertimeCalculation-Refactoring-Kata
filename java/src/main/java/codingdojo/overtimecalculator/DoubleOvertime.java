@@ -1,6 +1,7 @@
 package codingdojo.overtimecalculator;
 
 import codingdojo.Assignment;
+import codingdojo.BigDecimalUtils;
 import codingdojo.Briefing;
 import codingdojo.Overtime;
 
@@ -16,7 +17,7 @@ public class DoubleOvertime implements OvertimeCalculator {
     }
 
     private boolean exceedsStandardOvertime(BigDecimal hoursOvertimeTotal) {
-        return isALessThanB(WHEN_DOUBLE_OVERTIME_STARTS, hoursOvertimeTotal);
+        return BigDecimalUtils.isALessThanB(WHEN_DOUBLE_OVERTIME_STARTS, hoursOvertimeTotal);
     }
 
     private boolean isEligableForDoubleOvertime(Assignment assignment, Briefing briefing) {
@@ -24,10 +25,6 @@ public class DoubleOvertime implements OvertimeCalculator {
         var standardWatcode = briefing.watcode() && !(assignment.isUnionized() || briefing.z3() || briefing.foreign());
         var standardUnionized = assignment.isUnionized() && !(briefing.watcode() || briefing.hbmo());
         return (standardZ3 || standardWatcode || standardUnionized);
-    }
-
-    public static boolean isALessThanB(BigDecimal a, BigDecimal b) {
-        return a.compareTo(b) < 0;
     }
 
     @Override

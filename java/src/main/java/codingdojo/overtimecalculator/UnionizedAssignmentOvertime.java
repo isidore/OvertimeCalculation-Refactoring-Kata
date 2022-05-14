@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.time.Duration;
 
 import static codingdojo.overtimecalculator.DoubleOvertime.WHEN_DOUBLE_OVERTIME_STARTS;
-import static codingdojo.overtimecalculator.DoubleOvertime.isALessThanB;
+import static codingdojo.BigDecimalUtils.isALessThanB;
 
 public class UnionizedAssignmentOvertime implements OvertimeCalculator {
     public static final int THRESHOLD_OVERTIME_HOURS_RATE_2 = 6;
