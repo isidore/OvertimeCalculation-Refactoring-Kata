@@ -6,9 +6,6 @@ import java.math.BigDecimal;
 
 public class CompensationCalculator {
 
-    public final static BigDecimal MAX_OVERTIME_HOURS_RATE_1 = BigDecimal.TEN;
-    public static final int THRESHOLD_OVERTIME_HOURS_RATE_2 = 6;
-
     public static Overtime calculateOvertime(BigDecimal hoursOvertimeTotal, Assignment assignment, Briefing briefing) {
 
 

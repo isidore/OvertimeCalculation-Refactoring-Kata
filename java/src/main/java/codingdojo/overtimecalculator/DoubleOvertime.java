@@ -6,9 +6,9 @@ import codingdojo.Overtime;
 
 import java.math.BigDecimal;
 
-import static codingdojo.CompensationCalculator.MAX_OVERTIME_HOURS_RATE_1;
-
 public class DoubleOvertime implements OvertimeCalculator {
+
+    public final static BigDecimal WHEN_DOUBLE_OVERTIME_STARTS = BigDecimal.TEN;
 
     @Override
     public boolean isValidFor(BigDecimal hoursOvertimeTotal, Assignment assignment, Briefing briefing) {
@@ -16,7 +16,7 @@ public class DoubleOvertime implements OvertimeCalculator {
     }
 
     private boolean exceedsStandardOvertime(BigDecimal hoursOvertimeTotal) {
-        return isALessThanB(MAX_OVERTIME_HOURS_RATE_1, hoursOvertimeTotal);
+        return isALessThanB(WHEN_DOUBLE_OVERTIME_STARTS, hoursOvertimeTotal);
     }
 
     private boolean isEligableForDoubleOvertime(Assignment assignment, Briefing briefing) {
@@ -32,7 +32,7 @@ public class DoubleOvertime implements OvertimeCalculator {
 
     @Override
     public Overtime calculateOvertime(BigDecimal hoursOvertimeTotal, Assignment assignment, Briefing briefing) {
-        var hoursOvertimeRate2 = hoursOvertimeTotal.subtract(MAX_OVERTIME_HOURS_RATE_1);
-        return new Overtime(MAX_OVERTIME_HOURS_RATE_1, hoursOvertimeRate2);
+        var hoursOvertimeRate2 = hoursOvertimeTotal.subtract(WHEN_DOUBLE_OVERTIME_STARTS);
+        return new Overtime(WHEN_DOUBLE_OVERTIME_STARTS, hoursOvertimeRate2);
     }
 }
