@@ -1,5 +1,8 @@
 package codingdojo;
 
+import com.spun.util.ObjectUtils;
+import org.lambda.Extendable;
+
 public class ComparableUtils {
     public static <T extends Comparable<T>> boolean isALessThanOrEqualToB(T a, T b) {
         return a.compareTo(b) <= 0;
@@ -8,4 +11,23 @@ public class ComparableUtils {
     public static <T extends Comparable<T>> boolean isALessThanB(T a, T b) {
         return a.compareTo(b) < 0;
     }
+
+    public static <T extends Comparable<T>> ComparableWrapper<T> wrap(T object) {
+        return new ComparableWrapper(object);
+    }
+
+    public static class ComparableWrapper<T extends Comparable<T>> {
+
+        private T object;
+
+        public ComparableWrapper(T object) {
+            this.object = object;
+        }
+
+        public boolean isLessThan(T other) {
+            return isALessThanB(object, other);
+        }
+
+    }
+
 }
