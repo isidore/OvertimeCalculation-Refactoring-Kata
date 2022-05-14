@@ -24,38 +24,6 @@ public class CompensationCalculatorTest {
 
     }
 
-    @Disabled
-    @Test
-    void testDoubleOvertime() {
-        Boolean[] booleans = new Boolean[]{true, false};
-        CombinationApprovals.verifyAllCombinations(
-                this::isValidForDoubleOvertime,
-                 booleans, booleans, booleans, booleans, booleans);
-    }
-
-    @Test
-    void testDoubleOvertime2() {
-        Boolean[] booleans = new Boolean[]{true, false};
-        CombinationApprovals.verifyAllCombinations(
-                this::isValidForDoubleOvertime2,
-                 booleans, booleans, booleans, booleans, booleans);
-    }
-
-    private Object isValidForDoubleOvertime( boolean isUnionized,  boolean watcode, boolean z3, boolean foreign, boolean hbmo) {
-        var result = OverMaxOvertime.getBooleans(
-                new Assignment(isUnionized, Duration.ZERO),
-                new Briefing(watcode, z3, foreign, hbmo)
-        );
-        return new Tuple(result, result.all(b->b));
-    }
-
-    private Object isValidForDoubleOvertime2( boolean isUnionized,  boolean watcode, boolean z3, boolean foreign, boolean hbmo) {
-        var result = OverMaxOvertime.getBooleans2(
-                new Assignment(isUnionized, Duration.ZERO),
-                new Briefing(watcode, z3, foreign, hbmo)
-        );
-        return result.all(b->b);
-    }
     private Object callOvertime(BigDecimal bigDecimal, boolean isUnionized, Duration duration, boolean watcode, boolean z3, boolean foreign, boolean hbmo) {
         return CompensationCalculator.calculateOvertime(
                 bigDecimal,

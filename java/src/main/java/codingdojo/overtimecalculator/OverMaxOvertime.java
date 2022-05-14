@@ -24,30 +24,6 @@ public class OverMaxOvertime implements OvertimeCalculator {
 
     public static Queryable<Boolean> getBooleans(Assignment assignment, Briefing briefing) {
         var unionized = assignment.isUnionized();
-        var a1 = briefing.watcode()
-                || briefing.z3()
-                || unionized;
-
-        var aa1 = !unionized && briefing.z3() && !briefing.foreign();
-
-
-        var a2 = !briefing.hbmo() || !unionized;
-        var a4 = !briefing.watcode() || !unionized;
-
-        var b1 = (!briefing.hbmo() || !unionized) && (!briefing.watcode() || !unionized);
-
-        var a3 = !(briefing.watcode()
-                && !unionized
-                && briefing.foreign());
-        var a5 = !(briefing.foreign()
-                && !unionized);
-
-        var r = Queryable.as(a1, a2, a3, a4, a5);
-        return r;
-    }
-
-    public static Queryable<Boolean> getBooleans2(Assignment assignment, Briefing briefing) {
-        var unionized = assignment.isUnionized();
 
         var aa1 = !unionized && briefing.z3() && !briefing.foreign();
         var aa2 = !unionized && briefing.watcode() && !briefing.z3() && !briefing.foreign();
