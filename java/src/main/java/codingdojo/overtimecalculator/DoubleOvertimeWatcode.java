@@ -16,7 +16,8 @@ public class DoubleOvertimeWatcode implements OvertimeCalculator {
     @Override
     public boolean isValidFor(BigDecimal hoursOvertimeTotal, Assignment assignment, Briefing briefing) {
 
-        return isALessThanB(WHEN_DOUBLE_OVERTIME_STARTS, hoursOvertimeTotal) && briefing.watcode() && !(assignment.isUnionized() || briefing.z3() || briefing.foreign());
+        return isALessThanB(WHEN_DOUBLE_OVERTIME_STARTS, hoursOvertimeTotal) &&
+                briefing.watcode() && !(assignment.isUnionized() || briefing.z3() || briefing.foreign());
     }
 
     @Override
