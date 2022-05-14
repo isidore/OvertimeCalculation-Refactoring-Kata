@@ -3,7 +3,7 @@ package codingdojo;
 import java.math.BigDecimal;
 
 public class BigDecimalUtils {
-    public static boolean isALessThanOrEqualToB(BigDecimal a, BigDecimal b) {
+    public static <T extends Comparable<T>> boolean isALessThanOrEqualToB(T a, T b) {
         return a.compareTo(b) <= 0;
     }
 

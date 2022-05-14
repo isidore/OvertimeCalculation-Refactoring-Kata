@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.time.Duration;
 
 import static codingdojo.BigDecimalUtils.isALessThanB;
+import static codingdojo.BigDecimalUtils.isALessThanOrEqualToB;
 import static codingdojo.overtimecalculator.DoubleOvertime.WHEN_DOUBLE_OVERTIME_STARTS;
 
 public class UnionizedAssignmentOvertime implements OvertimeCalculator {
@@ -33,11 +34,10 @@ public class UnionizedAssignmentOvertime implements OvertimeCalculator {
 
     public static BigDecimal calculateMaxDoubleOvertimeAllowed(Assignment assignment, Briefing briefing) {
         var thresholdOvertimeHoursRate2 = briefing.foreign() ? THRESHOLD_OVERTIME_HOURS_RATE_2_FOREIGN : THRESHOLD_OVERTIME_HOURS_RATE_2;
-        Duration remainder = assignment.duration().minusHours(thresholdOvertimeHoursRate2);
-        if (remainder.isNegative()) {
-            return BigDecimal.valueOf(assignment.duration().toSeconds() / 3600);
-        } else {
-            return BigDecimal.valueOf(thresholdOvertimeHoursRate2);
+
+        if (isALessThanOrEqualToB(assignment.duration(), Duration.ofHours(thresholdOvertimeHoursRate2))) {
+            return BigDecimal.valueOf(assignment.duration().toHours());
         }
+        return BigDecimal.valueOf(thresholdOvertimeHoursRate2);
     }
 }
