@@ -12,6 +12,8 @@ class ComparableUtilsTest {
         Integer one = 1;
         Integer two = 2;
         assertTrue(wrap(one).isLessThan(two));
+        assertTrue(wrap(one).isLessThanOrEqual(two));
+        assertTrue(wrap(one).isEqualTo(one));
 
       }
 }

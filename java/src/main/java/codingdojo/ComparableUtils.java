@@ -1,9 +1,10 @@
 package codingdojo;
 
-import com.spun.util.ObjectUtils;
-import org.lambda.Extendable;
-
 public class ComparableUtils {
+    public static <T extends Comparable<T>> boolean isAEqualToB(T a, T b) {
+        return a.compareTo(b) == 0;
+    }
+
     public static <T extends Comparable<T>> boolean isALessThanOrEqualToB(T a, T b) {
         return a.compareTo(b) <= 0;
     }
@@ -28,6 +29,13 @@ public class ComparableUtils {
             return isALessThanB(object, other);
         }
 
+        public boolean isEqualTo(T other) {
+            return isAEqualToB(object, other);
+        }
+
+        public boolean isLessThanOrEqual(T other) {
+            return isALessThanOrEqualToB(object,other);
+        }
     }
 
 }
