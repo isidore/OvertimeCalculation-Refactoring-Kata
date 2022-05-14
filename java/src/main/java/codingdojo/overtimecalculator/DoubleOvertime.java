@@ -15,9 +15,9 @@ public class DoubleOvertime implements OvertimeCalculator {
 
         var unionized = assignment.isUnionized();
 
-        var standardZ3 = briefing.z3() && !unionized && !briefing.foreign();
-        var standardWatcode = briefing.watcode() && !unionized && !briefing.z3() && !briefing.foreign();
-        var standardUnionized = unionized && !briefing.watcode() && !briefing.hbmo();
+        var standardZ3 = briefing.z3() && (!unionized && !briefing.foreign());
+        var standardWatcode = briefing.watcode() && (!unionized && !briefing.z3() && !briefing.foreign());
+        var standardUnionized = unionized && (!briefing.watcode() && !briefing.hbmo());
 
         var isEligableForDoubleOvertime = (standardZ3 || standardWatcode || standardUnionized);
 
