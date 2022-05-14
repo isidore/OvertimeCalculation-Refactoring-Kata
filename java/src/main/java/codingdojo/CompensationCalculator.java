@@ -13,7 +13,9 @@ public class CompensationCalculator {
                 new NoOvertime(),
                 new UnderMaxOvertime(),
                 new UnionizedAssignmentOvertime(),
-                new DoubleOvertime()
+                new DoubleOvertimeZ3(),
+                new DoubleOvertimeWatcode(),
+                new DoubleOvertimeUnionized()
                 };
         for (OvertimeCalculator overtime : overtimes) {
             if (overtime.isValidFor(hoursOvertimeTotal,assignment, briefing)){
