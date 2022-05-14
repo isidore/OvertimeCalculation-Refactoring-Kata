@@ -23,8 +23,7 @@ public class DoubleOvertime implements OvertimeCalculator {
         var standardZ3 = briefing.z3() && !(assignment.isUnionized() || briefing.foreign());
         var standardWatcode = briefing.watcode() && !(assignment.isUnionized() || briefing.z3() || briefing.foreign());
         var standardUnionized = assignment.isUnionized() && !(briefing.watcode() || briefing.hbmo());
-        var isEligableForDoubleOvertime = (standardZ3 || standardWatcode || standardUnionized);
-        return isEligableForDoubleOvertime;
+        return (standardZ3 || standardWatcode || standardUnionized);
     }
 
     public static boolean isALessThanB(BigDecimal a, BigDecimal b) {
