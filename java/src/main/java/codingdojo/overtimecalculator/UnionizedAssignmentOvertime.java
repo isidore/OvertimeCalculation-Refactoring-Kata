@@ -12,12 +12,9 @@ import static codingdojo.BigDecimalUtils.isALessThanOrEqualToB;
 import static codingdojo.overtimecalculator.DoubleOvertime.WHEN_DOUBLE_OVERTIME_STARTS;
 
 public class UnionizedAssignmentOvertime implements OvertimeCalculator {
-    public static final int THRESHOLD_OVERTIME_HOURS_RATE_2 = 6;
-    private static final int THRESHOLD_OVERTIME_HOURS_RATE_2_FOREIGN = 4;
-
-    // The threshold for overtime hours at rate 2 should be changed from 6 to 4
-    // if the assignment is unionized and the briefing is foreign.
-
+    public static final int MAX_DOUBLE_OVERTIME_DOMESTIC = 6;
+    private static final int MAX_DOUBLE_OVERTIME_FOREIGN = 4;
+    
     @Override
     public boolean isValidFor(BigDecimal hoursOvertimeTotal, Assignment assignment, Briefing briefing) {
         var isNonExempt = !briefing.hbmo() && !briefing.watcode();
@@ -33,11 +30,10 @@ public class UnionizedAssignmentOvertime implements OvertimeCalculator {
     }
 
     public static BigDecimal calculateMaxDoubleOvertimeAllowed(Assignment assignment, Briefing briefing) {
-        var thresholdOvertimeHoursRate2 = briefing.foreign() ? THRESHOLD_OVERTIME_HOURS_RATE_2_FOREIGN : THRESHOLD_OVERTIME_HOURS_RATE_2;
-
-        if (isALessThanOrEqualToB(assignment.duration(), Duration.ofHours(thresholdOvertimeHoursRate2))) {
+        var max = briefing.foreign() ? MAX_DOUBLE_OVERTIME_FOREIGN : MAX_DOUBLE_OVERTIME_DOMESTIC;
+        if (isALessThanOrEqualToB(assignment.duration(), Duration.ofHours(max))) {
             return BigDecimal.valueOf(assignment.duration().toHours());
         }
-        return BigDecimal.valueOf(thresholdOvertimeHoursRate2);
+        return BigDecimal.valueOf(max);
     }
 }
