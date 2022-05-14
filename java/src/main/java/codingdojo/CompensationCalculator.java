@@ -28,17 +28,5 @@ public class CompensationCalculator {
         return new Overtime(hoursOvertimeTotal, BigDecimal.ZERO);
     }
 
-    public static boolean isApplesauce(Assignment assignment, Briefing briefing) {
-        boolean isWatcodeUnion = briefing.watcode() && assignment.isUnionized();
-        boolean isWatcodeNonUnionForeign = briefing.watcode() && !assignment.isUnionized() && briefing.foreign();
-
-        var isApplesauce = (!briefing.watcode() && !briefing.z3() && !assignment.isUnionized())
-                || (briefing.hbmo() && assignment.isUnionized())
-                || isWatcodeNonUnionForeign
-                || isWatcodeUnion
-                || (briefing.foreign() && !assignment.isUnionized());
-        return isApplesauce;
-    }
-
 
 }
